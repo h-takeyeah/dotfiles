@@ -10,10 +10,19 @@ vim.opt.cursorlineopt = "number"
 vim.opt.matchtime = 1
 vim.opt.wrap = false
 vim.opt.wildmenu = true
-vim.cmd [[
+vim.opt.background = "dark"
+vim.cmd([[
   syntax enable
   colorscheme gruvbox
-]]
+]])
+
+-- Set variables
+vim.g.netrw_liststyle = 3
+vim.g.netrw_browserx_viewer = "xdg-open"
+vim.cmd([[
+  let g:airline#extensions#whitespace#mixed_indent_algo = 2
+]])
+
 -- Enable true color
 if vim.fn.exists("+termguicolors") == 1 then
   vim.opt.termguicolors = true
@@ -26,6 +35,7 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
     group = augroup,
     callback = function()
         vim.opt_local.expandtab = false
+        vim.opt_local.shiftwidth = 0
     end,
 })
 
@@ -108,7 +118,7 @@ lspconfig["denols"].setup({
 })
 
 lspconfig["tsserver"].setup({
-  root_dir = lspconfig.util.root_pattern("package.json"),
+  root_dir = lspconfig.util.root_pattern("package.json", "jsconfig.json"),
   init_options = {lint = true},
   capabilities = capabilities,
   on_attach = on_attach,
@@ -116,6 +126,11 @@ lspconfig["tsserver"].setup({
 
 lspconfig["gopls"].setup({
   --cmd = {"gopls", "serve", "-rpc.trace", "--debug=localhost:6060"}, -- for debug
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
+lspconfig["pyright"].setup({
   capabilities = capabilities,
   on_attach = on_attach,
 })

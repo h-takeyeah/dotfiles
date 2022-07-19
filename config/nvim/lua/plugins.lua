@@ -13,8 +13,15 @@ return require("packer").startup(function()
   use "lifepillar/vim-solarized8" -- true-color solarized
 
   -- Status
-  use "vim-airline/vim-airline" -- Lean & mean status/tabline
+  use {
+    "vim-airline/vim-airline", -- Lean & mean status/tabline
+    setup = "vim.cmd[[let g:airline#extensions#whitespace#mixed_indent_algo = 1]]"
+  }
+
+  -- Code format
+  use "editorconfig/editorconfig-vim" -- EditorConfig plugin for Vim
 
   -- Go
   use "mattn/vim-goimports" -- Auto-formatting with `:w`
 end)
+
