@@ -71,6 +71,10 @@ autoload -Uz compinit; compinit
 
 zstyle ':completion:*:default' menu select=2
 
+# bash compatible completion (for poetry etc...)
+autoload -U bashcompinit; bashcompinit
+eval "$(register-python-argcomplete pipx)"
+
 # Settings from .bashrc
 # Enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -94,3 +98,10 @@ alias l='ls -CF'
 
 # gsamokovarov/jump
 eval "$(jump shell)"
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# pyenv integration
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
