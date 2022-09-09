@@ -70,10 +70,16 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 ### Start loading plugins (using zinit)
+# Script that should be run after compinit call (compinit defines compdef inside it).
+function after_completion_setup() {
+  # bash compatible completion (for pipx etc...)
+  autoload -Uz bashcompinit && bashcompinit
+  eval "$(register-python-argcomplete pipx)"
+}
 
-# Load plugins in turbo mode (wait) with no messages (lucid)
+# Load plugins in Turbo mode (wait) with no messages (lucid)
 zinit wait lucid light-mode for \
-    atinit'zicompinit; zicdreplay' \
+    atinit'zicompinit; zicdreplay; after_completion_setup' \
         zdharma-continuum/fast-syntax-highlighting \
     atload"_zsh_autosuggest_start; zstyle ':completion:*:default' menu select=2" \
         zsh-users/zsh-autosuggestions
@@ -85,17 +91,6 @@ zinit light romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-### 未解決
-# waitで遅延読込させるとautoload compinitが呼ばれるまでzicdreplayが
-# ブロックされるのでその間compdefが未定義になる。遅延読込なので読込
-# 完了前にここまで来るがcompdef未定義のためbashcompinitがエラる。
-# waitを使わないかautoloadを適当なタイミングで呼ぶかすれば解決すると
-# は思うが何度もcompinitを呼ばないためのブロッキングなのに本末転倒？
-###
-# bash compatible completion (for pipx etc...)
-#autoload -U bashcompinit; bashcompinit
-#eval "$(register-python-argcomplete pipx)"
 
 # gsamokovarov/jump
 eval "$(jump shell)"
