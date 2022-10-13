@@ -108,8 +108,7 @@
             "car": "",
             "default": ["", "", ""]
         },
-        //"on-click": "~/.config/waybar/modules/pulseaudio_onclick.sh"
-        "on-click": "~/.config/waybar/modules/pulseaudio_onclick.sh"
+        "on-click": "pavucontrol"
     },
     "custom/media": {
         "format": "{icon} {}",
