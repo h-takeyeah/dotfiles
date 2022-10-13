@@ -245,7 +245,4 @@ bar {
 # Fcitx5 autostart
 exec --no-startup-id fcitx5 -d
 
-# Unlocking KWallet automatically in a window manager
-exec --no-startup-id /usr/lib/pam_kwallet_init
-
 include /etc/sway/config.d/*
