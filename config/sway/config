@@ -242,6 +242,9 @@ bar {
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
+# NetworkManager applet for provide secret
+exec nm-applet --indicator
+
 # Fcitx5 autostart
 exec --no-startup-id fcitx5 -d
 
