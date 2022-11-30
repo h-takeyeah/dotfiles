@@ -61,7 +61,7 @@ client.focused #5294e2 #5294e2 #ffffff
 exec swayidle -w \
     timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
     timeout 600 'systemctl suspend' \
-    before-sleep 'swaylock -f -F -i wallpapers/lockscreen.png'
+    before-sleep 'swaylock -f -F -i wallpapers/lockscreen'
 
 ### Display configuration
 # Clamshell Mode
