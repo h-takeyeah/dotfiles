@@ -13,15 +13,16 @@ vim.opt.wildmenu = true
 vim.opt.background = "dark"
 vim.cmd([[
   syntax enable
-  colorscheme gruvbox
+  colorscheme iceberg
+  let g:airline_powerline_fonts = 1
+  "fix truncated column number issue (workaround)
+  let g:airline_section_z = "%p%%%#__accent_bold#%{g:airline_symbols.linenr}%l%#__restore__#%#__accent_bold#/%L%{g:airline_symbols.maxlinenr}%#__restore__#%#__accent_bold#%{g:airline_symbols.colnr}%v %#__restore__#"
+  let g:airline#extensions#tabline#enabled = 1
 ]])
 
 -- Set variables
 vim.g.netrw_liststyle = 3
 vim.g.netrw_browserx_viewer = "xdg-open"
-vim.cmd([[
-  let g:airline#extensions#whitespace#mixed_indent_algo = 2
-]])
 
 -- Enable true color
 if vim.fn.exists("+termguicolors") == 1 then
@@ -29,26 +30,32 @@ if vim.fn.exists("+termguicolors") == 1 then
 end
 
 -- Set indent options by each language
-local augroup = vim.api.nvim_create_augroup("indent_by_filetype", {clear = true})
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-    pattern = "*.go",
-    group = augroup,
-    callback = function()
-        vim.opt_local.expandtab = false
-        vim.opt_local.shiftwidth = 0
-    end,
+  pattern = "*.go",
+  group = vim.api.nvim_create_augroup("indent_by_filetype", {clear = true}),
+  callback = function()
+    vim.opt_local.expandtab = false
+    vim.opt_local.shiftwidth = 0
+  end,
+})
+
+-- Make background transparent
+vim.api.nvim_create_autocmd({"VimEnter", "Colorscheme"}, {
+  pattern = "*",
+  group = vim.api.nvim_create_augroup("transparent_bg", {clear = true}),
+  callback = function()
+    vim.cmd[[
+      highlight Normal guibg=none
+    ]]
+  end,
 })
 
 -- For LSP diagnos auto popup
 vim.opt.updatetime = 250
 
 -- LSP
--- LSP Installer
-require("nvim-lsp-installer").setup({
-  automatic_installation = true,
-})
--- LSP Installer end
-
+-- Mason
+require("mason").setup()
 -- Original LSP configuration:
 -- https://github.com/neovim/nvim-lspconfig#suggested-configuration
 
@@ -107,10 +114,21 @@ local lspconfig = require("lspconfig") -- LSP config
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- Complement source from LSP
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+lspconfig["ccls"].setup({
+  init_options = {
+    clang = {
+      excludeArgs = {"--gcc-toolchain=/usr"} ;
+    }
+  },
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
 
 -- https://deno.land/manual@v1.17.3/getting_started/setup_your_environment#neovim-06-and-nvim-lspconfig
 lspconfig["denols"].setup({
+  autostart = false,
   root_dir = lspconfig.util.root_pattern("deno.json"),
   init_options = {lint = true},
   capabilities = capabilities,
@@ -135,8 +153,18 @@ lspconfig["pyright"].setup({
   on_attach = on_attach,
 })
 
+lspconfig["efm"].setup({
+  filetypes = {"yaml"},
+  init_options = {documentFormatting = true},
+})
+
+lspconfig["cssls"].setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
 -- Complement
-vim.opt.completeopt = {"menu", "menuone", "noselect"}
+vim.opt.completeopt = {"menu", "menuone", "noselect", "noinsert"}
 local cmp = require("cmp") -- Complement engine
 cmp.setup({
   snippet = {
@@ -158,5 +186,8 @@ cmp.setup({
   }),
 })
 -- LSP setup end
+
+-- Git diff
+require('gitsigns').setup()
 
 require("plugins")
