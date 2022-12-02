@@ -232,6 +232,7 @@ input "type:touchpad" {
     bindsym XF86MonBrightnessDown exec brightnessctl -m s 5%- | awk -F ',' '{print substr($4, 1, length($4)-1)}' > $WOBSOCK
     bindsym XF86MonBrightnessUp exec brightnessctl -m s 5%+ | awk -F ',' '{print substr($4, 1, length($4)-1)}' > $WOBSOCK
     bindsym XF86Display output $laptop toggle
+    bindsym Print exec grim -g "$(slurp)" - | wl-copy
 #
 # Resizing containers:
 #
