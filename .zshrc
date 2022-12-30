@@ -84,6 +84,8 @@ zinit wait lucid light-mode for \
     atload"_zsh_autosuggest_start; zstyle ':completion:*:default' menu select=2" \
         zsh-users/zsh-autosuggestions
 
+zinit light zsh-users/zsh-completions
+
 # Load powerlevel10k theme
 zinit ice depth'1' # git clone depth
 zinit light romkatv/powerlevel10k
@@ -103,3 +105,5 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+alias sssd='sudo systemctl start docker'
