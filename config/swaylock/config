@@ -1,3 +1,4 @@
 show-failed-attempts
 daemonize
 image=$HOME/.config/swaylock/lockscreen
+inside-color=ffffff00
