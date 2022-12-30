@@ -13,7 +13,7 @@ vim.opt.wildmenu = true
 vim.opt.background = "dark"
 vim.cmd([[
   syntax enable
-  colorscheme iceberg
+  colorscheme gruvbox
   let g:airline_powerline_fonts = 1
   "fix truncated column number issue (workaround)
   let g:airline_section_z = "%p%%%#__accent_bold#%{g:airline_symbols.linenr}%l%#__restore__#%#__accent_bold#/%L%{g:airline_symbols.maxlinenr}%#__restore__#%#__accent_bold#%{g:airline_symbols.colnr}%v %#__restore__#"
@@ -129,8 +129,8 @@ lspconfig["ccls"].setup({
 -- https://deno.land/manual@v1.17.3/getting_started/setup_your_environment#neovim-06-and-nvim-lspconfig
 lspconfig["denols"].setup({
   autostart = false,
-  root_dir = lspconfig.util.root_pattern("deno.json"),
-  init_options = {lint = true},
+  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc", ".git"),
+  cmd = { "deno", "lsp", "--unstable" },
   capabilities = capabilities,
   on_attach = on_attach,
 })
