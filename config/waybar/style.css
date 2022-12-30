@@ -44,7 +44,8 @@ window .modules-right {
 }
 
 #pulseaudio, #network, #cpu, #memory, #battery,
-#idle_inhibitor, #bluetooth, #tray, #clock {
+#idle_inhibitor, #bluetooth, #tray, #clock,
+#custom-media {
   margin: 0 4px;
   padding: 0 2px;
 }

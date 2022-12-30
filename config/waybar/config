@@ -6,7 +6,7 @@
     // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "idle_inhibitor", "bluetooth", "tray", "clock"],
+    "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "custom/media", "idle_inhibitor", "bluetooth", "tray", "clock"],
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,
@@ -91,5 +91,16 @@
             "activated": "<big></big>",
             "deactivated": "<big></big>"
         }
+    },
+    "custom/media": {
+        "format": "{icon} {}",
+        "return-type": "json",
+        "format-icons": {
+            "Playing": "",
+            "Paused": "",
+        },
+        "max-length":70,
+        "exec": "playerctl --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' --ignore-player chromium --follow -- metadata",
+        "on-click": "playerctl play-pause"
     }
 }
