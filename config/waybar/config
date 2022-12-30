@@ -52,15 +52,15 @@
         "format": "{}% "
     },
     "battery": {
-        "bat": "BAT0",
         "states": {
-            // "good": 95,
+            "good": 85,
             "warning": 30,
             "critical": 15
         },
         "format": "{capacity}% {icon}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
+        "format-charging": "{capacity}% ",
         "format-icons": ["", "", "", "", ""]
     },
     "network": {
