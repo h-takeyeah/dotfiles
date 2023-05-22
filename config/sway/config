@@ -20,9 +20,6 @@ set $term konsole
 # on the original workspace that the command was run on.
 set $menu wofi --gtk-dark --show drun | xargs --no-run-if-empty swaymsg exec --
 
-### Environment
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
