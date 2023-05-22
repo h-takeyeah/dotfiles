@@ -100,7 +100,7 @@
             "Paused": "",
         },
         "max-length":70,
-        "exec": "playerctl --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' --ignore-player chromium --follow -- metadata",
+        "exec": "playerctl --format '{\"text\": \"{{markup_escape(title)}} - {{artist}}\", \"tooltip\": \"{{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' --ignore-player chromium --follow -- metadata",
         "on-click": "playerctl play-pause"
     }
 }
