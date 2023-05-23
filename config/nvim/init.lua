@@ -116,16 +116,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- Complement source from LSP
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-lspconfig["ccls"].setup({
-  init_options = {
-    clang = {
-      excludeArgs = {"--gcc-toolchain=/usr"} ;
-    }
-  },
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-
 -- https://deno.land/manual@v1.17.3/getting_started/setup_your_environment#neovim-06-and-nvim-lspconfig
 lspconfig["denols"].setup({
   autostart = false,
