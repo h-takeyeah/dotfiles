@@ -266,13 +266,16 @@ bar {
     #status_command i3status
     swaybar_command waybar
 }
-# NetworkManager applet for provide secret
-exec nm-applet --indicator
+# iwgtk indicator
+exec iwgtk -i
+
+# polkit agent
+exec /usr/lib/polkit-kde-authentication-agent-1
 
 # Fcitx5 autostart
 exec --no-startup-id fcitx5 -d
 
 # Slack autostart
-exec slack -u %U
+exec slack -u --password-store=gnome %U
 
 include /etc/sway/config.d/*
