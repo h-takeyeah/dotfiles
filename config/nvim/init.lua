@@ -153,6 +153,15 @@ lspconfig["cssls"].setup({
   on_attach = on_attach,
 })
 
+lspconfig["clangd"].setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
+lspconfig["rust_analyzer"].setup({
+  on_attach = on_attach
+})
+
 -- Complement
 vim.opt.completeopt = {"menu", "menuone", "noselect", "noinsert"}
 local cmp = require("cmp") -- Complement engine
