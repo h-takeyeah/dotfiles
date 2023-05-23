@@ -40,7 +40,7 @@ gaps inner 4
 gaps outer 0
 
 # Window decolation
-default_border pixel 2
+default_border none
 client.focused #5294e2 #5294e2 #ffffff
 
 ### Idle configuration
@@ -73,7 +73,7 @@ font Noto Sans CJK JP 10
 ### Window rules
 for_window {
   [shell="xwayland"] title_format "%title [XWayland]"
-  [class="jetbrains-studio" title="win0|Welcome.*"] floating enable
+  [class="jetbrains-studio" title="splash|Welcome.*"] floating enable
   [class="jetbrains-idea" title="splash|Welcome.*"] floating enable
   [app_id="zoom"] floating enable
   [app_id="zoom" title="Zoom Meeting"] floating disable, layout tabbed
@@ -221,11 +221,14 @@ input "type:touchpad" {
 
 #
 # Multimedia keys
-#
+# https://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
     bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print substr($5, 1, length($5)-1)}' > $WOBSOCK
     bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print substr($5, 1, length($5)-1)}' > $WOBSOCK
     bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
     bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    bindsym XF86AudioPrev exec playerctl previous
+    bindsym XF86AudioPlay exec playerctl play-pause
+    bindsym XF86AudioNext exec playerctl next
     bindsym XF86MonBrightnessDown exec brightnessctl -m s 5%- | awk -F ',' '{print substr($4, 1, length($4)-1)}' > $WOBSOCK
     bindsym XF86MonBrightnessUp exec brightnessctl -m s 5%+ | awk -F ',' '{print substr($4, 1, length($4)-1)}' > $WOBSOCK
     bindsym XF86Display output $laptop toggle
