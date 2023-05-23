@@ -3,7 +3,7 @@
 }
 
 window#waybar {
-  background: linear-gradient(shade(alpha(@borders, 0.9), 1.25), shade(alpha(@borders, 0.85), 1.25));
+  background: rgba(60, 60, 60, 0.9);
   border-bottom: 1px solid shade(alpha(@borders, 0.9), 1.25);
   color: @theme_text_color;
 }
