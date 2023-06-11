@@ -1,0 +1,26 @@
+#window {
+  border-radius: 8px;
+  font-size: 24px;
+  font-family: monospace;
+}
+
+#entry {
+  border-width: 2px;
+}
+
+#text:selected {
+  margin-left: 8px;
+}
+
+#entry:selected {
+  font-weight: bold;
+  background-color: #5251e2;
+}
+
+#img {
+  margin-right: 0.75rem;
+}
+
+#inner-box {
+  padding: 10px;
+}
