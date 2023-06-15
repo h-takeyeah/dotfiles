@@ -13,8 +13,18 @@ cd /path/to/thisrepo
 ln -s /path/to/wallpaper.{png,jpg} config/sway/wallpapers/wallpaper_defualt
 ln -s /path/to/wallpaper.{png,jpg} config/sway/wallpapers/wallpaper_edp1
 
-# or just copy favorite image file to config/sway/wallpaper directory.
+# or just copy favorite image file to config/sway/wallpaper directory and rename them to wallpaper_{default,edp1}.
 ```
+
+#### sway (optional)
+- A shell script to turn on the internal LCD(in-LCD) when an external monitor is plugged in or unplugged.
+```bash
+ln -s /path/to/thisrepo/local/bin/onchange-monitor.sh ~/.local/bin/onchange-monitor.sh
+echo -n "ACTION==\"change\", SUBSYSTEM==\"drm\", RUN+=\"/usr/bin/su $(id -un) -c ~/.local/bin/onchange-monitor.sh\"" | sudo tee /etc/udev/rules.d/95-extenal-monitor-onchange.rules
+sudo udevadm control --reload
+```
+
+(How to check) Turn off in-LCD and run `journalctl -f -u systemd-udevd` to see logs. Then plug in/out HDMI cable and check the script had run by reading logs and in-LCD turned on. Something wrong? then run the command `journalctl...` to debug.
 
 ### swaylock
 Make sure `lockscreen` exist
