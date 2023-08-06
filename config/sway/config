@@ -128,7 +128,7 @@ input "type:touchpad" {
     bindsym $mod+Shift+c reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e exec echo -n -e '⏻ exec systemctl poweroff\n󰑓 exec systemctl reboot\n⏾ exec systemctl suspend\n󰍃 exit' | wofi --dmenu --prompt '' --width 25% --lines 5 | cut -f2- -d ' ' | xargs --no-run-if-empty swaymsg --
 #
 # Moving around:
 #
@@ -269,6 +269,10 @@ bar {
     #status_command i3status
     swaybar_command waybar
 }
+
+# Notification Daemon
+exec swaync
+
 # iwgtk indicator
 exec iwgtk -i
 
