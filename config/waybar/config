@@ -4,7 +4,7 @@
     "margin-bottom": 5,
     "modules-left": ["sway/workspaces", "sway/mode", "cpu", "memory", "battery"],
     "modules-center": ["custom/media"],
-    "modules-right": ["pulseaudio", "network", "idle_inhibitor", "bluetooth", "tray", "clock"],
+    "modules-right": ["pulseaudio", "network", "idle_inhibitor", "custom/notification", "bluetooth", "tray", "clock"],
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,
@@ -96,5 +96,25 @@
         "max-length":70,
         "exec": "playerctl --format '{\"text\": \"{{markup_escape(title)}} - {{markup_escape(artist)}}\", \"tooltip\": \"{{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' --ignore-player chromium --follow -- metadata",
         "on-click": "playerctl play-pause"
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     }
 }
