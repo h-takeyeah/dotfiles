@@ -26,10 +26,16 @@ return require("packer").startup(function()
   use "cocopon/iceberg.vim" -- Bluish color scheme
 
   -- Status
-  use "vim-airline/vim-airline" -- Lean & mean status/tabline
+  use {
+    "vim-airline/vim-airline", -- Lean & mean status/tabline
+    opt = true,
+    event = { "BufReadPost", "BufAdd", "BufNewFile" }
+  }
 
   use {
     "lewis6991/gitsigns.nvim", -- Git integration for buffers
+    opt = true,
+    event = { "BufReadPost", "BufAdd", "BufNewFile" },
     config = function() require("gitsigns").setup() end
   }
 
