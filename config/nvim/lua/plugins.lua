@@ -3,12 +3,18 @@ return require("packer").startup(function()
   use "wbthomason/packer.nvim" -- Packer
 
   -- LSP and completion
-  use "neovim/nvim-lspconfig" -- Quickstart configs for Nvim LSP
+  use {
+      "neovim/nvim-lspconfig", -- Quickstart configs for Nvim LSP
+      config = function() require("config.lsp") end
+  }
   use "hrsh7th/nvim-cmp" -- A completion engine plugin
   use "hrsh7th/cmp-nvim-lsp" -- nvim-cmp source for neovim builtin LSP client
 
   -- LSP manager (successor for nvim-lsp-installer)
-  use "williamboman/mason.nvim"
+  use {
+    "williamboman/mason.nvim",
+    config = function() require("mason").setup() end
+  }
 
   -- Colorschemes
   use "morhetz/gruvbox" -- gruvbox
@@ -19,7 +25,10 @@ return require("packer").startup(function()
   -- Status
   use "vim-airline/vim-airline" -- Lean & mean status/tabline
 
-  use "lewis6991/gitsigns.nvim" -- Git integration for buffers
+  use {
+    "lewis6991/gitsigns.nvim", -- Git integration for buffers
+    config = function() require("gitsigns").setup() end
+  }
 
   -- Code format
   use "editorconfig/editorconfig-vim" -- EditorConfig plugin for Vim
