@@ -107,6 +107,8 @@ lspconfig["clangd"].setup({
 lspconfig["rust_analyzer"].setup({
   on_attach = on_attach
 })
+
+vim.api.nvim_command([[LspStart]]) -- Start LSPs (required when lspconfig is loaded with delay(lazy load))
 -- LSP setup end
 
 -- Complement
