@@ -2,7 +2,7 @@ vim.cmd.packadd "packer.nvim"
 
 return require("packer").startup(function()
   -- Plugin manager for Neovim
-  use "wbthomason/packer.nvim" -- Packer
+  use { "wbthomason/packer.nvim", opt = true } -- Packer
 
   -- LSP and completion
   use {
@@ -36,5 +36,7 @@ return require("packer").startup(function()
   use "editorconfig/editorconfig-vim" -- EditorConfig plugin for Vim
 
   -- Go
-  use "mattn/vim-goimports" -- Auto-formatting with `:w`
+  use { "mattn/vim-goimports", opt = true, ft = { "go" } } -- Auto-formatting with `:w`
 end)
+
+-- ref. https://qiita.com/delphinus/items/8160d884d415d7425fcc
