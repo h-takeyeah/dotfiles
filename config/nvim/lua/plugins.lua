@@ -7,6 +7,7 @@ return require("packer").startup(function()
   -- LSP and completion
   use {
       "neovim/nvim-lspconfig", -- Quickstart configs for Nvim LSP
+      event = { "CursorHold", "FocusLost" },
       config = function() require("config.lsp") end
   }
   use "hrsh7th/nvim-cmp" -- A completion engine plugin
