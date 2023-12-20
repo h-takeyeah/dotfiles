@@ -1,3 +1,5 @@
+vim.cmd.packadd "packer.nvim"
+
 return require("packer").startup(function()
   -- Plugin manager for Neovim
   use "wbthomason/packer.nvim" -- Packer
