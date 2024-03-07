@@ -65,14 +65,12 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 -- https://deno.land/manual@v1.17.3/getting_started/setup_your_environment#neovim-06-and-nvim-lspconfig
 lspconfig["denols"].setup({
   root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-  init_options = {enable = true, unstable = true},
-  cmd = {"deno", "lsp"},
   capabilities = capabilities,
   on_attach = on_attach,
 })
 
 lspconfig["tsserver"].setup({
-  root_dir = lspconfig.util.root_pattern("package.json"),
+  root_dir = lspconfig.util.root_pattern("package-lock.json", "bun.lockb", "pnpm-lock.yaml", "yarn.lock"),
   capabilities = capabilities,
   on_attach = on_attach,
   single_file_support = false,

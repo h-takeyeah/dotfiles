@@ -6,9 +6,9 @@ return require("packer").startup(function()
 
   -- LSP and completion
   use {
-      "neovim/nvim-lspconfig", -- Quickstart configs for Nvim LSP
-      event = { "CursorHold", "FocusLost" },
-      config = function() require("config.lsp") end
+    "neovim/nvim-lspconfig", -- Quickstart configs for Nvim LSP
+    event = { "CursorHold", "FocusLost" },
+    config = function() require("config.lsp") end
   }
   use "hrsh7th/nvim-cmp" -- A completion engine plugin
   use "hrsh7th/cmp-nvim-lsp" -- nvim-cmp source for neovim builtin LSP client
@@ -19,7 +19,11 @@ return require("packer").startup(function()
     config = function() require("mason").setup() end
   }
 
-  -- Colorschemes
+  -- Syntax
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
+  }
   use "morhetz/gruvbox" -- gruvbox
   use "lifepillar/vim-solarized8" -- true-color solarized
   use "w0ng/vim-hybrid" -- hybrid
@@ -44,6 +48,11 @@ return require("packer").startup(function()
 
   -- Go
   use { "mattn/vim-goimports", opt = true, ft = { "go" } } -- Auto-formatting with `:w`
+
+  use {
+    "/home/youtaku/.config/nvim/lua/local-plugin/ryoppippi-bun-to-deno",
+    disable = true
+  }
 end)
 
 -- ref. https://qiita.com/delphinus/items/8160d884d415d7425fcc

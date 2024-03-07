@@ -58,5 +58,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 -- packer
 require("plugins")
 
--- Set colorscheme
-require("config.color")
+-- other config
+require("config.color") -- colorscheme
+require("config.treesitter")-- treesitter
