@@ -13,7 +13,7 @@ export SHELDON_CONFIG_DIR="$ZSHRC_DIR/sheldon"
 export SPACESHIP_CONFIG_PATH=("$ZSHRC_DIR/spaceship/spaceship.zsh" $SPACESHIP_CONFIG_PATH)
 
 # load plugins
-eval "$(sheldon source)" # TODO: speed up!!!
+eval "$(sheldon source)"
 
 export PATH="$PATH:/usr/local/go/bin"
 
