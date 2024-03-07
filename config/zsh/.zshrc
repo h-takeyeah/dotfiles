@@ -1,109 +1,54 @@
-# ============
-# youtaku .zshrc
-#
-# - Zinit
-#   https://github.com/zdharma-continuum/zinit
-#   - Powerlevel10k (Make sure Meslo Nerd Font is installed as system font!)
-#     https://github.com/romkatv/powerlevel10k/blob/main/README.md
-# - Settings from .bashrc
-# - Settings from (bare) .zshrc
-# ============
+ZSHRC_DIR=${${(%):-%N}:A:h}
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+export PATH="$PATH:$HOME/.local/bin"
 
-# Use emacs keybindings even if our EDITOR is set to vi
-bindkey -e
+export HISTFILE=$HOME/.zsh_history
+export HISTSIZE=1000
+export SAVEHIST=100000
 
-# Fix Delete key bug(Attention!! This keycode is for US keyboard)
-bindkey "^[[3~" delete-char
+[ -d "$HOME/.local/share/zsh/site-functions" ] && fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
 
-# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=1000
-SAVEHIST=1000
-HISTFILE=~/.zsh_history
+autoload -Uz compinit; compinit
+zstyle ':completion:*:default' menu select=2
 
-### Settings from .bashrc
-# Enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
+export SHELDON_CONFIG_DIR="$ZSHRC_DIR/sheldon"
+export SPACESHIP_CONFIG_PATH=("$ZSHRC_DIR/spaceship/spaceship.zsh" $SPACESHIP_CONFIG_PATH)
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+# load plugins
+eval "$(sheldon source)" # TODO: speed up!!!
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-### End of .bashrc chunk
+export PATH="$PATH:/usr/local/go/bin"
 
-### Added by Zinit's installer
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
-fi
+eval "$(direnv hook zsh)"
 
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+# fnm
+export PATH="$HOME/.local/share/fnm:$PATH"
+eval "$(fnm env --use-on-cd --corepack-enabled)"
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
+[ -f "$ZSHRC_DIR/.zsh_aliases" ] && source "$ZSHRC_DIR/.zsh_aliases"
 
-### End of Zinit's installer chunk
+# podman
+podman system connection add podman -d --identity ~/.ssh/id_ed25519 ssh://user@$(hostname -I|tr -d " "):58596/run/user/1000/podman/podman.sock
 
-### Start loading plugins (using zinit)
-# Script that should be run after compinit call (compinit defines compdef inside it).
-function after_completion_setup() {
-  # bash compatible completion (for pipx etc...)
-  autoload -Uz bashcompinit && bashcompinit
-  eval "$(register-python-argcomplete pipx)"
-}
+# rust
+. "$HOME/.cargo/env"
 
-# Load plugins in Turbo mode (wait) with no messages (lucid)
-zinit wait lucid light-mode for \
-    atinit'zicompinit; zicdreplay; after_completion_setup' \
-        zdharma-continuum/fast-syntax-highlighting \
-    atload"_zsh_autosuggest_start; zstyle ':completion:*:default' menu select=2" \
-        zsh-users/zsh-autosuggestions
+# bun completions
+[ -s "/home/youtaku/.bun/_bun" ] && source "/home/youtaku/.bun/_bun"
 
-zinit light zsh-users/zsh-completions
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
-# Load powerlevel10k theme
-zinit ice depth'1' # git clone depth
-zinit light romkatv/powerlevel10k
-### End of plugin installation chunk
+# deno
+export DENO_INSTALL="/home/youtaku/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# gsamokovarov/jump
+# jump
 eval "$(jump shell)"
 
-# volta-cli/volta
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+# golang
+export PATH="$PATH:/usr/local/go/bin"
 
-# pyenv integration
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-alias sssd='sudo systemctl start docker'
+# Added by Amplify CLI binary installer
+export PATH="$HOME/.amplify/bin:$PATH"
