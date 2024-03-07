@@ -47,3 +47,8 @@ Make sure [`playerctl`](https://github.com/altdesktop/playerctl) is installed.
 
 ### debug discord
 Set `DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING` to `true` in `${XDG_CONFIG_HOME:-$HOME}/.config/discord/settings/json`
+
+### zsh
+```bash
+ln -s /path/to/thisrepo/config/zsh/.zshrc ~/.zshrc
+```
