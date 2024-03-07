@@ -6,8 +6,6 @@ export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=1000
 export SAVEHIST=100000
 
-[ -d "$HOME/.local/share/zsh/site-functions" ] && fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
-
 autoload -Uz compinit; compinit
 zstyle ':completion:*:default' menu select=2
 
