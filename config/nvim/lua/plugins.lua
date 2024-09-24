@@ -1,7 +1,4 @@
 return {
-  -- Plugin manager for Neovim
-  { "wbthomason/packer.nvim" }, -- Packer
-
   -- LSP and completion
   { "neovim/nvim-lspconfig" }, -- Quickstart configs for Nvim LSP
   {

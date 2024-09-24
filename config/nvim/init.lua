@@ -11,34 +11,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local plugins = {
-  -- LSP and completion
-  { "neovim/nvim-lspconfig" }, -- Quickstart configs for Nvim LSP
-  { "hrsh7th/nvim-cmp" }, -- A completion engine plugin
-  { "hrsh7th/cmp-nvim-lsp" }, -- nvim-cmp source for neovim builtin LSP client
-
-  -- LSP manager (successor for nvim-lsp-installer)
-  { "williamboman/mason.nvim" },
-
-  -- Colorschemes
-  { "morhetz/gruvbox", lazy = false }, -- gruvbox
-  { "lifepillar/vim-solarized8", lazy = false }, -- true-color solarized
-  { "w0ng/vim-hybrid", lazy = false }, -- hybrid
-  { "cocopon/iceberg.vim", lazy = false }, -- Bluish color scheme
-
-  -- Status
-  { "vim-airline/vim-airline" }, -- Lean & mean status/tabline
-
-  { "lewis6991/gitsigns.nvim" }, -- Git integration for buffers
-
-  -- Code format
-  { "editorconfig/editorconfig-vim" }, -- EditorConfig plugin for Vim
-
-  -- Go
-  { "mattn/vim-goimports" }, -- Auto-formatting with `:w`
-}
-
-require("lazy").setup(plugins)
+require("lazy").setup({
+  spec = {
+    { import = "plugins" },
+  }
+})
 
 vim.opt.number = true
 vim.opt.expandtab = true
