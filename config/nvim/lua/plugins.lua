@@ -84,6 +84,27 @@ return {
   -- LSP manager (successor for nvim-lsp-installer)
   { "williamboman/mason.nvim", config = true },
 
+  -- Semantic highlights
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = true,
+    opt = {
+      auto_install = true,
+      ensure_installed = { "c", "python" },
+      highlight = {
+        enabled = true,
+        disable = function(_lang, buf)
+          local max_filesize = 100 * 1024
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+            return true
+          end
+        end
+      }
+    }
+  },
+
   -- Colorschemes
   { "morhetz/gruvbox" }, -- gruvbox
   { "lifepillar/vim-solarized8" }, -- true-color solarized
