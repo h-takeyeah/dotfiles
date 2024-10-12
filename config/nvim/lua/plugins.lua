@@ -49,7 +49,7 @@ return {
       })
 
       local lspconfig = require("lspconfig")
-      local servers = { "clangd" }
+      local servers = { "clangd", "pylyzer" }
 
       for _, server_name in pairs(servers) do
         lspconfig[server_name].setup({})
