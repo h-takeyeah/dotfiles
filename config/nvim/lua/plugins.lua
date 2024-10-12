@@ -5,8 +5,17 @@ return {
     config = function(_, _)
       vim.api.nvim_create_autocmd("LspAttach", {
         desc = "Attach key mappings for LSP functionalities",
-        callback = function(_args)
-          --    print(vim.inspect(_args))
+        callback = function(args)
+          --    print(vim.inspect(args))
+          local bufnr = args.buf
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if client.server_capabilities.completionProvider then
+            vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+          end
+          if client.server_capabilities.definitionProvider then
+            vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+          end
+
           local opts = { silent = true }
           vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
           vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
