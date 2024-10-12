@@ -3,6 +3,7 @@ return {
   {
     "neovim/nvim-lspconfig", -- Quickstart configs for Nvim LSP
     config = function(_, _)
+      vim.opt.updatetime = 250
       vim.api.nvim_create_autocmd("LspAttach", {
         desc = "Attach key mappings for LSP functionalities",
         callback = function(args)
@@ -34,6 +35,16 @@ return {
           vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
           vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
           vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
+          vim.diagnostic.config({ virtual_text = false })
+
+          vim.api.nvim_create_autocmd("CursorHold", {
+            desc = "Show diagnostic LSP on hover",
+            buffer = bufnr,
+            callback = function()
+              vim.diagnostic.setloclist()
+            end,
+          })
         end
       })
 
