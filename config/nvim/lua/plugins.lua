@@ -16,7 +16,7 @@ return {
             vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
           end
 
-          local opts = { silent = true }
+          local opts = { silent = true, buffer = bufnr }
           vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
           vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
@@ -43,6 +43,23 @@ return {
       for _, server_name in pairs(servers) do
         lspconfig[server_name].setup({})
       end
+
+      -- Note: nvim-cmp by default will start suggesting completions as you type
+      local cmp = require("cmp")
+      cmp.setup({
+        mapping = cmp.mapping.preset.insert({
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping.confirm({ select = false }),
+        }),
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+        }, {
+          { name = "buffer" },
+        })
+      })
     end
   },
   {
