@@ -36,13 +36,20 @@ return {
           vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
           vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
-          vim.diagnostic.config({ virtual_text = false })
+          vim.diagnostic.config({
+            virtual_text = false,
+            float = {
+              border = "rounded",
+              header = "",
+              prefix = "",
+            },
+          })
 
           vim.api.nvim_create_autocmd("CursorHold", {
             desc = "Show diagnostic LSP on hover",
             buffer = bufnr,
             callback = function()
-              vim.diagnostic.setloclist()
+              vim.diagnostic.open_float()
             end,
           })
         end
