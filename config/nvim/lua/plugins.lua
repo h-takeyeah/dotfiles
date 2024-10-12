@@ -49,7 +49,9 @@ return {
             desc = "Show diagnostic LSP on hover",
             buffer = bufnr,
             callback = function()
-              vim.diagnostic.open_float()
+              vim.diagnostic.open_float({
+                focusable = false,
+              })
             end,
           })
         end
