@@ -45,7 +45,7 @@ return {
   },
 
   -- LSP manager (successor for nvim-lsp-installer)
-  { "williamboman/mason.nvim" },
+  { "williamboman/mason.nvim", config = true },
 
   -- Colorschemes
   { "morhetz/gruvbox" }, -- gruvbox
