@@ -15,8 +15,6 @@ export SPACESHIP_CONFIG_PATH=("$ZSHRC_DIR/spaceship/spaceship.zsh" $SPACESHIP_CO
 # load plugins
 eval "$(sheldon source)"
 
-export PATH="$PATH:/usr/local/go/bin"
-
 eval "$(direnv hook zsh)"
 
 # fnm
@@ -26,10 +24,13 @@ eval "$(fnm env --use-on-cd --corepack-enabled)"
 [ -f "$ZSHRC_DIR/.zsh_aliases" ] && source "$ZSHRC_DIR/.zsh_aliases"
 
 # podman
-podman system connection add podman -d --identity ~/.ssh/id_ed25519 ssh://user@$(hostname -I|tr -d " "):58596/run/user/1000/podman/podman.sock
+podman system connection add podman -d --identity ~/.ssh/id_ed25519 ssh://user@$(hostname -I|tr -d " "):64727/run/user/1000/podman/podman.sock
+
+# go
+export PATH="$PATH:/usr/local/go/bin:${GOPATH:-$HOME/go}/bin"
 
 # rust
-. "$HOME/.cargo/env"
+#. "$HOME/.cargo/env"
 
 # bun completions
 [ -s "/home/youtaku/.bun/_bun" ] && source "/home/youtaku/.bun/_bun"
@@ -42,11 +43,11 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export DENO_INSTALL="/home/youtaku/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
+# zig
+export PATH="$HOME/zig:$PATH"
+
 # jump
 eval "$(jump shell)"
-
-# golang
-export PATH="$PATH:/usr/local/go/bin"
 
 # Added by Amplify CLI binary installer
 export PATH="$HOME/.amplify/bin:$PATH"

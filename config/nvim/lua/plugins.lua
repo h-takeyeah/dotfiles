@@ -12,6 +12,7 @@ return require("packer").startup(function()
   }
   use "hrsh7th/nvim-cmp" -- A completion engine plugin
   use "hrsh7th/cmp-nvim-lsp" -- nvim-cmp source for neovim builtin LSP client
+  use "mattn/emmet-vim" -- emmet for vim: http://emmet.io/
 
   -- LSP manager (successor for nvim-lsp-installer)
   use {
@@ -28,6 +29,8 @@ return require("packer").startup(function()
   use "lifepillar/vim-solarized8" -- true-color solarized
   use "w0ng/vim-hybrid" -- hybrid
   use "cocopon/iceberg.vim" -- Bluish color scheme
+  use "xiantang/darcula-dark.nvim" -- Jetbrains Darcula Dark for Neovim
+  use "navarasu/onedark.nvim" -- One dark and light colorscheme
 
   -- Status
   use {
@@ -35,6 +38,7 @@ return require("packer").startup(function()
     opt = true,
     event = { "BufReadPost", "BufAdd", "BufNewFile" }
   }
+  use "vim-airline/vim-airline-themes" -- A collection of themes for vim-airline
 
   use {
     "lewis6991/gitsigns.nvim", -- Git integration for buffers
@@ -53,6 +57,9 @@ return require("packer").startup(function()
     "/home/youtaku/.config/nvim/lua/local-plugin/ryoppippi-bun-to-deno",
     disable = true
   }
+
+  -- Zig
+  use "ziglang/zig.vim"
 end)
 
 -- ref. https://qiita.com/delphinus/items/8160d884d415d7425fcc

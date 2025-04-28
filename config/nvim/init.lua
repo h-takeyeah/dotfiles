@@ -10,7 +10,6 @@ vim.opt.cursorlineopt = "number"
 vim.opt.matchtime = 1
 vim.opt.wrap = false
 vim.opt.wildmenu = true
-vim.opt.background = "dark"
 vim.cmd([[
   syntax enable
   let g:airline_powerline_fonts = 1
@@ -39,15 +38,15 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
 })
 
 -- Make background transparent
-vim.api.nvim_create_autocmd({"VimEnter", "Colorscheme"}, {
-  pattern = "*",
-  group = vim.api.nvim_create_augroup("transparent_bg", {clear = true}),
-  callback = function()
-    vim.cmd[[
-      highlight Normal guibg=none
-    ]]
-  end,
-})
+--vim.api.nvim_create_autocmd({"VimEnter", "Colorscheme"}, {
+--  pattern = "*",
+--  group = vim.api.nvim_create_augroup("transparent_bg", {clear = true}),
+--  callback = function()
+--    vim.cmd[[
+--      highlight Normal guibg=none
+--    ]]
+--  end,
+--})
 
 -- Automatically call PackerCompile after plugins.lua update
 vim.api.nvim_create_autocmd("BufWritePost", {
