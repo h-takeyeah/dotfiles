@@ -22,11 +22,13 @@ return require("packer").startup(function()
 
   -- Syntax
   use {
-    'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate'
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate"
   }
+
+  -- Color
   use "morhetz/gruvbox" -- gruvbox
-  use "lifepillar/vim-solarized8" -- true-color solarized
+  use "lifepillar/vim-solarized8"-- true-color solarized
   use "w0ng/vim-hybrid" -- hybrid
   use "cocopon/iceberg.vim" -- Bluish color scheme
   use "xiantang/darcula-dark.nvim" -- Jetbrains Darcula Dark for Neovim
@@ -35,15 +37,13 @@ return require("packer").startup(function()
   -- Status
   use {
     "vim-airline/vim-airline", -- Lean & mean status/tabline
-    opt = true,
-    event = { "BufReadPost", "BufAdd", "BufNewFile" }
+    event = { "BufReadPost", "BufAdd", "BufNewFile", "InsertEnter" }
   }
   use "vim-airline/vim-airline-themes" -- A collection of themes for vim-airline
 
   use {
     "lewis6991/gitsigns.nvim", -- Git integration for buffers
-    opt = true,
-    event = { "BufReadPost", "BufAdd", "BufNewFile" },
+    event = { "BufReadPost", "BufAdd", "BufNewFile", "InsertEnter" },
     config = function() require("gitsigns").setup() end
   }
 
@@ -54,7 +54,7 @@ return require("packer").startup(function()
   use { "mattn/vim-goimports", opt = true, ft = { "go" } } -- Auto-formatting with `:w`
 
   -- Zig
-  use "ziglang/zig.vim"
+  use { "ziglang/zig.vim", ft = { "zig" } }
 end)
 
 -- ref. https://qiita.com/delphinus/items/8160d884d415d7425fcc
