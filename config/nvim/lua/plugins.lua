@@ -53,11 +53,6 @@ return require("packer").startup(function()
   -- Go
   use { "mattn/vim-goimports", opt = true, ft = { "go" } } -- Auto-formatting with `:w`
 
-  use {
-    "/home/youtaku/.config/nvim/lua/local-plugin/ryoppippi-bun-to-deno",
-    disable = true
-  }
-
   -- Zig
   use "ziglang/zig.vim"
 end)
