@@ -15,16 +15,7 @@ export SPACESHIP_CONFIG_PATH=("$ZSHRC_DIR/spaceship/spaceship.zsh" $SPACESHIP_CO
 # load plugins
 eval "$(sheldon source)"
 
-eval "$(direnv hook zsh)"
-
-# fnm
-export PATH="$HOME/.local/share/fnm:$PATH"
-eval "$(fnm env --use-on-cd --corepack-enabled)"
-
 [ -f "$ZSHRC_DIR/.zsh_aliases" ] && source "$ZSHRC_DIR/.zsh_aliases"
-
-# podman
-podman system connection add podman -d --identity ~/.ssh/id_ed25519 ssh://user@$(hostname -I|tr -d " "):64727/run/user/1000/podman/podman.sock
 
 # go
 export PATH="$PATH:/usr/local/go/bin:${GOPATH:-$HOME/go}/bin"
