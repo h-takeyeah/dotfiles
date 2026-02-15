@@ -2,6 +2,10 @@ ZSHRC_DIR=${${(%):-%N}:A:h}
 
 export PATH="$PATH:$HOME/.local/bin"
 
+bindkey -e
+# delete key as delete-char(for US keyboard)
+bindkey "^[[3~" delete-char
+
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=1000
 export SAVEHIST=100000
