@@ -58,7 +58,7 @@ return {
       })
 
       local lspconfig = require("lspconfig")
-      local servers = { "clangd", "pylyzer" }
+      local servers = { "clangd", "pyright" }
 
       for _, server_name in pairs(servers) do
         lspconfig[server_name].setup({})
@@ -122,6 +122,7 @@ return {
 
   -- Status
   { "vim-airline/vim-airline" }, -- Lean & mean status/tabline
+  { "vim-airline/vim-airline-themes" },
 
   { "lewis6991/gitsigns.nvim" }, -- Git integration for buffers
 

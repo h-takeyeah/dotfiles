@@ -37,10 +37,9 @@ vim.opt.cursorlineopt = "number"
 vim.opt.matchtime = 1
 vim.opt.wrap = false
 vim.opt.wildmenu = true
-vim.opt.background = "dark"
 vim.cmd([[
   syntax enable
-  colorscheme gruvbox
+  colorscheme solarized8
   let g:airline_powerline_fonts = 1
   let g:airline#extensions#tabline#enabled = 1
 ]])
