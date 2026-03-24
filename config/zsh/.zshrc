@@ -46,3 +46,8 @@ eval "$(jump shell)"
 
 # Added by Amplify CLI binary installer
 export PATH="$HOME/.amplify/bin:$PATH"
+
+# asdf-vm
+[ -d "${ASDF_DATA_DIR:-$HOME/.asdf}" ] \
+    && export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH" \
+    && fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
