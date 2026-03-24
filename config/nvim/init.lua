@@ -20,7 +20,6 @@ vim.cmd([[
 
 -- Set variables
 vim.g.netrw_liststyle = 3
-vim.g.netrw_browserx_viewer = "xdg-open"
 
 -- Enable true color
 if vim.fn.exists("+termguicolors") == 1 then
@@ -36,17 +35,6 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
     vim.opt_local.shiftwidth = 0
   end,
 })
-
--- Make background transparent
---vim.api.nvim_create_autocmd({"VimEnter", "Colorscheme"}, {
---  pattern = "*",
---  group = vim.api.nvim_create_augroup("transparent_bg", {clear = true}),
---  callback = function()
---    vim.cmd[[
---      highlight Normal guibg=none
---    ]]
---  end,
---})
 
 -- Automatically call PackerCompile after plugins.lua update
 vim.api.nvim_create_autocmd("BufWritePost", {
