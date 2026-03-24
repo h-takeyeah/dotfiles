@@ -56,8 +56,7 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
 })
 
 -- other config
---require("config.color") -- colorscheme
---require("config.treesitter")-- treesitter
+require("config.color") -- colorscheme
 require("lazy").setup({
   spec = {
     { import = "plugins" },
