@@ -34,7 +34,6 @@ return {
           vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
           vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
           vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-          vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
           vim.diagnostic.config({
             virtual_text = false,
@@ -45,40 +44,51 @@ return {
             },
           })
 
+          vim.api.nvim_create_autocmd("DiagnosticChanged", {
+            desc = "Update location list in background along with code change",
+            callback = function(args)
+              -- release focus after setloclist()
+              local winid = vim.api.nvim_get_current_win()
+              vim.diagnostic.setloclist()
+              -- if you want to open and close location list manually,
+              -- pass { open = false } to `setloclist` and utilize `:lclose`/`:lopen`
+              vim.api.nvim_set_current_win(winid)
+            end
+          })
+
           vim.api.nvim_create_autocmd("CursorHold", {
             desc = "Show diagnostic LSP on hover",
             buffer = bufnr,
             callback = function()
               vim.diagnostic.open_float({
                 focusable = false,
+                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+                scope = "cursor",
               })
             end,
           })
         end
       })
 
-      local lspconfig = require("lspconfig")
-      local servers = { "clangd", "pyright" }
-
-      for _, server_name in pairs(servers) do
-        lspconfig[server_name].setup({})
-      end
-
-      -- Note: nvim-cmp by default will start suggesting completions as you type
-      local cmp = require("cmp")
+      vim.opt.completeopt = {"menu", "menuone", "noselect", "noinsert"}
+      local cmp = require("cmp") -- Complement engine
       cmp.setup({
         mapping = cmp.mapping.preset.insert({
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = false }),
+          ["<CR>"] = cmp.mapping.confirm({select = true}), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }),
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-        }, {
-          { name = "buffer" },
-        })
+        sources = {
+          { name = "nvim_lsp" }
+        }
+      })
+
+      --capabilities.textDocument.completion.completionItem.snippetSupport = true
+      vim.lsp.config("*", { capabilities = require("cmp_nvim_lsp").default_capabilities() })
+      vim.lsp.enable({
+        "pyright",
       })
     end
   },
