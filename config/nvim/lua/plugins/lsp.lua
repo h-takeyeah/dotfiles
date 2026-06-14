@@ -63,6 +63,37 @@ return {
               vim.diagnostic.open_float(nil, opts)
             end,
           })
+
+          vim.api.nvim_clear_autocmds({
+            group = mylsp_group,
+            event = "BufWritePre",
+            buffer = bufnr,
+          })
+
+          -- https://go.dev/gopls/editor/vim#neovim-imports
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            group = mylsp_group,
+            buffer = bufnr,
+            callback = function()
+		      --print(string.format("event fired: %s", vim.inspect(ev)))
+              local client = vim.lsp.get_clients({buffer = bufnr})[1]
+              local position_enc = (client and client.offset_encoding) or "utf-16"
+              local params = vim.lsp.util.make_range_params(nil, position_enc)
+              params.context = {only = {"source.organizeImports"}}
+              -- organize imports if needed
+              local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+              for cid, res in pairs(result or {}) do
+                for _, r in pairs(res.result or {}) do
+                  if r.edit then
+                    local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+                    vim.lsp.util.apply_workspace_edit(r.edit, enc)
+                  end
+                end
+              end
+              -- format
+              vim.lsp.buf.format({async = false})
+            end
+          })
         end
       })
 
