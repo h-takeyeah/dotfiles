@@ -18,11 +18,14 @@ return {
       vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
       vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
+      local mylsp_group = vim.api.nvim_create_augroup("MyLsp", {clear = true})
       vim.api.nvim_create_autocmd("LspAttach", {
         desc = "Attach key mappings for LSP functionalities",
+        group = mylsp_group,
         callback = function(args)
+          local bufnr = args.buf
           -- Enable completion triggered by <c-x><c-o>
-          vim.api.nvim_buf_set_option(args.buf, "omnifunc", "v:lua.vim.lsp.omnifunc")
+          vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
           -- Mappings.
           -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -48,6 +51,7 @@ return {
           vim.diagnostic.config({virtual_text = false})
           -- show diagnostic on hover
           vim.api.nvim_create_autocmd("CursorHold", {
+            group = mylsp_group,
             buffer = bufnr,
             callback = function()
               local opts = {
