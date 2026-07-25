@@ -111,6 +111,14 @@ return {
         filetypes = {"yaml"},
         init_options = {documentFormatting = true},
       })
+
+      vim.lsp.config("pyright", {
+        settings = {
+          python = {
+            pythonPath = ".venv/bin/python" -- use .venv/bin/python if exists
+          }
+        }
+      })
       vim.lsp.enable({
         "clangd",
         "cssls",
